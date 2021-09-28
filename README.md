@@ -13,3 +13,7 @@ global variable errno is set to indicate the error.
 
 ### gettimeofday()
 ##### int gettimeofday(struct timeal *restrict tp, void *restrict tzp);
+The system's notion of the current Greenwich time and the current time zone is obtained with the gettimeofday() call. The time is expressed in seconds and microseconds since midnight (0 hour), January 1, 1970. If tp is NULL and tzp is non-NULL, gettimeofday() will populate the timezone struct in tzp.  If tp is non-NULL and tzp is NULL, then only the timeval struct in tp is populated. If both tp and tzp are NULL, nothing is returned.
+
+### pthread_create()
+##### int pthread_create(p_thread_t *thread, const pthread_attr_t *attr, void *(start_routine)(void *), void *arg);
