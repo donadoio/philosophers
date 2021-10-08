@@ -3,51 +3,102 @@
 /*                                                        ::::::::            */
 /*   ft_itoa.c                                          :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: lwray <lwray@student.codam.nl>               +#+                     */
+/*   By: idonado <idonado@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2021/10/02 20:43:05 by lwray         #+#    #+#                 */
-/*   Updated: 2021/10/07 18:57:51 by idonado       ########   odam.nl         */
+/*   Created: 2020/06/22 18:48:41 by idonado       #+#    #+#                 */
+/*   Updated: 2021/10/08 10:49:26 by idonado       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#include <philo.h>
 
-static int	number_len(int n)
+static int	ft_itoa_spaces(int n)
 {
-	int	len;
+	int	spaces;
 
-	len = 0;
-	if (n < 0)
-	{
-		n = n * -1;
-		len++;
-	}
-	while ((n / 10) > 0)
+	spaces = 0;
+	while (n > 0)
 	{
 		n = n / 10;
-		len++;
+		spaces++;
 	}
-	return (len + 1);
+	return (spaces);
+}
+
+static	char	ft_itoa_op(int *n)
+{
+	char	c;
+
+	c = (*n % 10) + '0';
+	*n = *n / 10;
+	return (c);
+}
+
+static	char	*ft_itoa_process_negative(int n, int spaces)
+{
+	char	*result;
+	int		space_t;
+
+	result = (char *)malloc(sizeof(char) * (spaces + 1));
+	if (result == NULL)
+		return (NULL);
+	result[0] = '-';
+	space_t = spaces - 1;
+	if (n == 0)
+		result[0] = '0';
+	while (n != 0)
+	{
+		result[space_t] = ft_itoa_op(&n);
+		space_t--;
+	}
+	result[spaces] = '\0';
+	return (result);
+}
+
+static	char	*ft_itoa_process_positive(int n, int spaces)
+{
+	char	*result;
+	int		space_t;
+
+	result = (char *)malloc(sizeof(char) * (spaces + 1));
+	if (result == NULL)
+		return (NULL);
+	space_t = spaces - 1;
+	if (n == 0)
+		result[0] = '0';
+	while (n != 0)
+	{
+		result[space_t] = ft_itoa_op(&n);
+		space_t--;
+	}
+	result[spaces] = '\0';
+	return (result);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*str;
-	int		num_len;
-	int		index;
+	int		spaces;
+	int		temp;
+	char	*result;
 
-	num_len = number_len(n);
-	str = (char *)malloc(num_len + 1);
-	if (!str)
-		return (NULL);
-	str[num_len] = '\0';
-	index = num_len - 1;
-	while ((n / 10) > 0)
+	spaces = 0;
+	temp = n;
+	if (n == 0 || n == -0)
+		return (ft_strdup("0"));
+	if (n == -2147483648)
+		return (ft_strdup("-2147483648"));
+	if (n < 0)
 	{
-		str[index] = ((n % 10) + '0');
-		n = n / 10;
-		index--;
+		spaces++;
+		temp = n * -1;
+		spaces = spaces + ft_itoa_spaces(temp);
+		result = ft_itoa_process_negative(temp, spaces);
+		return (result);
 	}
-	str[index] = ((n % 10) + '0');
-	return (str);
+	else
+	{
+		spaces = spaces + ft_itoa_spaces(temp);
+		result = ft_itoa_process_positive(temp, spaces);
+		return (result);
+	}
 }

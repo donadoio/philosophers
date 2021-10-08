@@ -2,6 +2,9 @@ NAME = philo
 
 SRC =	main.c\
 		philo_a.c\
+		utils/lst_new.c\
+		utils/lst_last.c\
+		utils/lst_add_back.c\
 		utils/ft_atoi.c\
 		utils/ft_itoa.c\
 		utils/ft_strjoin.c\
