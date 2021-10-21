@@ -1,15 +1,15 @@
 NAME = philo
 
 SRC =	main.c\
-		philo_a.c\
-		utils/lst_new.c\
-		utils/lst_last.c\
-		utils/lst_add_back.c\
+		parse_data.c\
+		program_init.c\
+		routine.c\
+		routine_b.c\
+		take_action.c\
 		utils/ft_atoi.c\
-		utils/ft_itoa.c\
-		utils/ft_strjoin.c\
 		utils/ft_strlen.c\
-		utils/ft_strdup.c
+		utils/utils_a.c\
+		utils/utils_b.c
 
 SRC_MAP = srcs/
 
@@ -30,7 +30,7 @@ $(NAME): $(OBJS)
 	@echo "\033[1m\033[32mSuccessfully Compiled\033[39m"
 
 %.o: %.c
-	@$(CC) -o $@ -c $<  $(HDRS) $(FLAGS)
+	$(CC) -o $@ -c $<  $(HDRS) $(FLAGS)
 
 clean: 
 	@rm $(OBJS)
